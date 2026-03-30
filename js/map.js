@@ -2,9 +2,8 @@
    Kakao Map 초기화
    ============================================ */
 
-// Kakao Maps SDK 로드 후 실행
-document.addEventListener('DOMContentLoaded', () => {
-  // SDK가 로드되었는지 확인
+// Kakao SDK autoload=false 설정 후, 수동으로 로드 시작
+window.addEventListener('load', () => {
   if (typeof kakao === 'undefined' || typeof kakao.maps === 'undefined') {
     console.warn('Kakao Maps SDK가 로드되지 않았습니다. API 키를 확인하세요.');
     showMapPlaceholder();
@@ -21,12 +20,16 @@ function initMaps() {
     {
       id: 'map-lakeside',
       name: '레이크사이드 컨트리클럽',
-      address: '경기도 용인시 처인구 모현읍 능원로 181'
+      address: '경기도 용인시 처인구 모현읍 능원로 181',
+      lat: 37.2911,
+      lng: 127.1556
     },
     {
       id: 'map-gapyeong',
       name: '가평베네스트 골프클럽',
-      address: '경기도 가평군 상면 둔덕말길 232'
+      address: '경기도 가평군 상면 둔덕말길 232',
+      lat: 37.7936,
+      lng: 127.3569
     }
   ];
 
@@ -36,46 +39,24 @@ function initMaps() {
     const container = document.getElementById(venue.id);
     if (!container) return;
 
-    // 주소로 좌표 검색
+    // 주소로 좌표 검색 (실패 시 폴백 좌표 사용)
     geocoder.addressSearch(venue.address, (result, status) => {
       if (status === kakao.maps.services.Status.OK) {
-        const coords = {
-          lat: parseFloat(result[0].y),
-          lng: parseFloat(result[0].x)
-        };
-        venue.lat = coords.lat;
-        venue.lng = coords.lng;
+        venue.lat = parseFloat(result[0].y);
+        venue.lng = parseFloat(result[0].x);
+      }
 
-        // 현재 보이는 컨테이너만 바로 초기화
-        if (!container.classList.contains('hidden')) {
-          createKakaoMap(container, venue);
-        } else {
-          // 숨겨진 컨테이너는 탭 전환 시 초기화
-          container._pendingVenue = venue;
-        }
+      if (!container.classList.contains('hidden')) {
+        createKakaoMap(container, venue);
       } else {
-        console.warn('주소 검색 실패:', venue.address);
-        // 폴백: 대략적 좌표 사용
-        if (venue.id === 'map-lakeside') {
-          venue.lat = 37.2911;
-          venue.lng = 127.1556;
-        } else {
-          venue.lat = 37.7936;
-          venue.lng = 127.3569;
-        }
-
-        if (!container.classList.contains('hidden')) {
-          createKakaoMap(container, venue);
-        } else {
-          container._pendingVenue = venue;
-        }
+        container._pendingVenue = venue;
       }
     });
   });
 }
 
 function createKakaoMap(container, venue) {
-  if (container._kakaoMap) return; // 이미 초기화됨
+  if (container._kakaoMap) return;
 
   const position = new kakao.maps.LatLng(venue.lat, venue.lng);
 
@@ -94,14 +75,12 @@ function createKakaoMap(container, venue) {
   });
   infowindow.open(map, marker);
 
-  // 지도 컨트롤 추가
   const zoomControl = new kakao.maps.ZoomControl();
   map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
   container._kakaoMap = map;
 }
 
-// Kakao SDK 로드 실패 시 플레이스홀더 표시
 function showMapPlaceholder() {
   const containers = document.querySelectorAll('.map-container');
   containers.forEach(container => {
