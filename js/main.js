@@ -100,10 +100,6 @@ function initVenueTabs() {
 /* --- Location Tabs (Section 7) --- */
 function initLocationTabs() {
   const tabs = document.querySelectorAll('.location-tabs .venue-tab');
-  const maps = {
-    lakeside: document.getElementById('map-lakeside'),
-    gapyeong: document.getElementById('map-gapyeong')
-  };
   const infos = {
     lakeside: document.getElementById('info-lakeside'),
     gapyeong: document.getElementById('info-gapyeong')
@@ -115,23 +111,6 @@ function initLocationTabs() {
 
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-
-      Object.entries(maps).forEach(([k, el]) => {
-        if (k === key) {
-          el.classList.remove('hidden');
-          // Trigger Kakao map relayout if initialized
-          if (el._kakaoMap) {
-            el._kakaoMap.relayout();
-          }
-          // Lazy init if pending
-          if (el._pendingVenue) {
-            createKakaoMap(el, el._pendingVenue);
-            delete el._pendingVenue;
-          }
-        } else {
-          el.classList.add('hidden');
-        }
-      });
 
       Object.entries(infos).forEach(([k, el]) => {
         if (k === key) {
