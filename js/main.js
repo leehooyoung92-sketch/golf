@@ -3,7 +3,7 @@
    ============================================ */
 
 // Google Apps Script 배포 URL (배포 후 교체 필요)
-const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbys3Yv0lzFfnvcSpmhXei6FcRMlRCwRViM7PkrVluxa43ncc4wQMNiX6d_OeQyLAt_V/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
