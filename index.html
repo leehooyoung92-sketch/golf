@@ -10,32 +10,28 @@
   <title>포지티브인베스트먼트 LP 초청 골프 세미나</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@700;900&family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <!-- Section 1: Hero Banner -->
   <section id="hero">
-    <div class="hero-deco hero-deco--1"></div>
-    <div class="hero-deco hero-deco--2"></div>
     <div class="hero-overlay">
-      <img src="images/회사로고.png" alt="Positive Investment" class="hero-logo">
+      <p class="hero-logo-text">POSITIVE<br>INVESTMENT</p>
       <div class="hero-divider"></div>
       <p class="hero-subtitle-top">2026</p>
-      <h1 class="hero-title">LP 초청 골프 세미나</h1>
+      <h1 class="hero-title">LP 초청<br>골프 세미나</h1>
       <div class="hero-date-box">
         <p>6. 10 (화) 레이크사이드 CC</p>
         <p>6. 12 (목) 가평베네스트</p>
       </div>
+      <div class="scroll-indicator">
+        <span>SCROLL</span>
+        <div class="scroll-arrow"></div>
+      </div>
     </div>
   </section>
-
-  <!-- Decorative Curve -->
-  <div class="section-curve">
-    <div class="curve-line curve-line--1"></div>
-    <div class="curve-line curve-line--2"></div>
-  </div>
 
   <!-- Section 2: Greeting -->
   <section id="greeting">
@@ -54,17 +50,11 @@
         <p><strong>더욱 뜻깊은 시간이 될 것입니다.</strong></p>
       </div>
       <div class="greeting-sign reveal">
-        <img src="images/회사로고.png" alt="Positive Investment" class="greeting-logo">
+        <p class="greeting-logo-text">POSITIVE INVESTMENT</p>
         <p>포지티브인베스트먼트 임직원 일동</p>
       </div>
     </div>
   </section>
-
-  <!-- Decorative Curve -->
-  <div class="section-curve">
-    <div class="curve-line curve-line--1"></div>
-    <div class="curve-line curve-line--2"></div>
-  </div>
 
   <!-- Section 3: Venues -->
   <section id="venues">
@@ -192,36 +182,58 @@
   <section id="countdown">
     <div class="container">
       <h2 class="section-title section-title--light reveal">D-Day</h2>
-      <div class="countdown-display reveal">
-        <div class="countdown-item">
-          <span class="countdown-number" id="cd-days">00</span>
-          <span class="countdown-label">DAYS</span>
-        </div>
-        <div class="countdown-sep">:</div>
-        <div class="countdown-item">
-          <span class="countdown-number" id="cd-hours">00</span>
-          <span class="countdown-label">HOURS</span>
-        </div>
-        <div class="countdown-sep">:</div>
-        <div class="countdown-item">
-          <span class="countdown-number" id="cd-minutes">00</span>
-          <span class="countdown-label">MIN</span>
-        </div>
-        <div class="countdown-sep">:</div>
-        <div class="countdown-item">
-          <span class="countdown-number" id="cd-seconds">00</span>
-          <span class="countdown-label">SEC</span>
+      <!-- 레이크사이드 CC -->
+      <div class="countdown-group reveal" id="countdown-lakeside">
+        <p class="countdown-event-label">레이크사이드CC · 6/10 (화)</p>
+        <div class="countdown-display">
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd1-days">00</span>
+            <span class="countdown-label">DAYS</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd1-hours">00</span>
+            <span class="countdown-label">HOURS</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd1-minutes">00</span>
+            <span class="countdown-label">MIN</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd1-seconds">00</span>
+            <span class="countdown-label">SEC</span>
+          </div>
         </div>
       </div>
-      <p class="countdown-note reveal" id="countdown-note">첫 번째 행사(6/10)까지</p>
+      <!-- 가평베네스트 -->
+      <div class="countdown-group reveal" id="countdown-gapyeong">
+        <p class="countdown-event-label">가평베네스트 · 6/12 (목)</p>
+        <div class="countdown-display">
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd2-days">00</span>
+            <span class="countdown-label">DAYS</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd2-hours">00</span>
+            <span class="countdown-label">HOURS</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd2-minutes">00</span>
+            <span class="countdown-label">MIN</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="cd2-seconds">00</span>
+            <span class="countdown-label">SEC</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
-
-  <!-- Decorative Curve -->
-  <div class="section-curve">
-    <div class="curve-line curve-line--1"></div>
-    <div class="curve-line curve-line--2"></div>
-  </div>
 
   <!-- Section 6: RSVP Form -->
   <section id="rsvp">
@@ -291,12 +303,6 @@
     </div>
   </section>
 
-  <!-- Decorative Curve -->
-  <div class="section-curve">
-    <div class="curve-line curve-line--1"></div>
-    <div class="curve-line curve-line--2"></div>
-  </div>
-
   <!-- Section 7: Location -->
   <section id="location">
     <div class="container">
@@ -308,44 +314,37 @@
         <button class="venue-tab active" data-map="lakeside">레이크사이드 CC</button>
         <button class="venue-tab" data-map="gapyeong">가평베네스트</button>
       </div>
+      <!-- 카카오맵 컨테이너 -->
+      <div id="map-lakeside" class="map-container reveal"></div>
+      <div id="map-gapyeong" class="map-container hidden"></div>
       <!-- 레이크사이드 -->
-      <div class="location-card reveal" id="info-lakeside">
-        <div class="location-map-frame">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3178.5!2d127.155!3d37.291!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDE3JzI4LjAiTiAxMjfCsDA5JzIwLjIiRQ!5e0!3m2!1sko!2skr!4v1" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="location-info reveal" id="info-lakeside">
+        <p class="location-name">레이크사이드 컨트리클럽</p>
+        <p class="location-addr">경기도 용인시 처인구 모현읍 능원로 181</p>
+        <p class="location-tel"><a href="tel:031-334-2111">TEL 031-334-2111</a></p>
+        <div class="location-directions">
+          <p><strong>자가용 이용 시</strong></p>
+          <p>* 경부고속도로: 판교IC → 분당시범단지 → 율동공원 → 태재고개 → 오포터널 → 43번국도</p>
+          <p>* 강남양재: 분당수서간 고속화도로 → 분당시범단지 → 동일 경로</p>
         </div>
-        <div class="location-info-body">
-          <p class="location-name">레이크사이드 컨트리클럽</p>
-          <p class="location-addr">경기도 용인시 처인구 모현읍 능원로 181</p>
-          <p class="location-tel"><a href="tel:031-334-2111">TEL 031-334-2111</a></p>
-          <div class="location-directions">
-            <p><strong>자가용 이용 시</strong></p>
-            <p>* 경부고속도로: 판교IC → 분당시범단지 → 율동공원 → 태재고개 → 오포터널 → 43번국도</p>
-            <p>* 강남양재: 분당수서간 고속화도로 → 분당시범단지 → 동일 경로</p>
-          </div>
-          <div class="location-buttons">
-            <a href="https://map.kakao.com/link/to/레이크사이드CC,37.2911,127.1556" target="_blank" class="direction-btn">카카오맵 길찾기</a>
-            <a href="https://map.naver.com/v5/search/레이크사이드컨트리클럽" target="_blank" class="direction-btn direction-btn--naver">네이버 길찾기</a>
-          </div>
+        <div class="location-buttons">
+          <a href="https://map.kakao.com/link/to/레이크사이드CC,37.2911,127.1556" target="_blank" class="direction-btn">카카오맵 길찾기</a>
+          <a href="https://map.naver.com/v5/search/레이크사이드컨트리클럽" target="_blank" class="direction-btn direction-btn--naver">네이버 길찾기</a>
         </div>
       </div>
       <!-- 가평베네스트 -->
-      <div class="location-card hidden" id="info-gapyeong">
-        <div class="location-map-frame">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3178.5!2d127.357!3d37.794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ3JzM4LjAiTiAxMjfCsDIxJzI1LjAiRQ!5e0!3m2!1sko!2skr!4v1" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="location-info hidden" id="info-gapyeong">
+        <p class="location-name">가평베네스트 골프클럽</p>
+        <p class="location-addr">경기도 가평군 상면 둔덕말길 232</p>
+        <p class="location-tel"><a href="tel:031-589-8000">TEL 031-589-8000</a></p>
+        <div class="location-directions">
+          <p><strong>자가용 이용 시</strong></p>
+          <p>* 수도권제2순환: 수동휴게소IC → 비봉로(수동계곡·현리 방면) → 가평베네스트</p>
+          <p>* 서울양양: 화도IC → 경춘로(청평·춘천방향) → 청평검문소 좌회전 → 비봉로</p>
         </div>
-        <div class="location-info-body">
-          <p class="location-name">가평베네스트 골프클럽</p>
-          <p class="location-addr">경기도 가평군 상면 둔덕말길 232</p>
-          <p class="location-tel"><a href="tel:031-589-8000">TEL 031-589-8000</a></p>
-          <div class="location-directions">
-            <p><strong>자가용 이용 시</strong></p>
-            <p>* 수도권제2순환: 수동휴게소IC → 비봉로(수동계곡·현리 방면) → 가평베네스트</p>
-            <p>* 서울양양: 화도IC → 경춘로(청평·춘천방향) → 청평검문소 좌회전 → 비봉로</p>
-          </div>
-          <div class="location-buttons">
-            <a href="https://map.kakao.com/link/to/가평베네스트,37.7936,127.3569" target="_blank" class="direction-btn">카카오맵 길찾기</a>
-            <a href="https://map.naver.com/v5/search/가평베네스트골프클럽" target="_blank" class="direction-btn direction-btn--naver">네이버 길찾기</a>
-          </div>
+        <div class="location-buttons">
+          <a href="https://map.kakao.com/link/to/가평베네스트,37.7936,127.3569" target="_blank" class="direction-btn">카카오맵 길찾기</a>
+          <a href="https://map.naver.com/v5/search/가평베네스트골프클럽" target="_blank" class="direction-btn direction-btn--naver">네이버 길찾기</a>
         </div>
       </div>
     </div>
@@ -398,6 +397,9 @@
     </div>
   </div>
 
+  <!-- Kakao Map SDK -->
+  <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9571b4f275800dd19eef7fd89ff6b3f1&libraries=services&autoload=false"></script>
   <script src="js/main.js"></script>
+  <script src="js/map.js"></script>
 </body>
 </html>

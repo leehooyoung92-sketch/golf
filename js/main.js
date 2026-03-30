@@ -30,41 +30,50 @@ function initScrollReveal() {
   reveals.forEach(el => observer.observe(el));
 }
 
-/* --- D-Day Countdown --- */
+/* --- D-Day Countdown (두 행사 동시 표시) --- */
 function initCountdown() {
-  const events = [
-    { date: new Date('2026-06-10T10:30:00+09:00'), label: '레이크사이드CC (6/10)까지' },
-    { date: new Date('2026-06-12T10:30:00+09:00'), label: '가평베네스트 (6/12)까지' }
+  const timers = [
+    {
+      date: new Date('2026-06-10T10:30:00+09:00'),
+      els: {
+        days: document.getElementById('cd1-days'),
+        hours: document.getElementById('cd1-hours'),
+        minutes: document.getElementById('cd1-minutes'),
+        seconds: document.getElementById('cd1-seconds')
+      },
+      group: document.getElementById('countdown-lakeside')
+    },
+    {
+      date: new Date('2026-06-12T10:30:00+09:00'),
+      els: {
+        days: document.getElementById('cd2-days'),
+        hours: document.getElementById('cd2-hours'),
+        minutes: document.getElementById('cd2-minutes'),
+        seconds: document.getElementById('cd2-seconds')
+      },
+      group: document.getElementById('countdown-gapyeong')
+    }
   ];
-
-  const daysEl = document.getElementById('cd-days');
-  const hoursEl = document.getElementById('cd-hours');
-  const minutesEl = document.getElementById('cd-minutes');
-  const secondsEl = document.getElementById('cd-seconds');
-  const noteEl = document.getElementById('countdown-note');
-  const displayEl = document.querySelector('.countdown-display');
 
   function update() {
     const now = new Date();
-    const target = events.find(e => e.date > now);
+    timers.forEach(timer => {
+      const diff = timer.date - now;
+      if (diff <= 0) {
+        timer.group.querySelector('.countdown-display').innerHTML =
+          '<p class="countdown-ended">행사가 종료되었습니다</p>';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    if (!target) {
-      displayEl.innerHTML = '<p class="countdown-ended">행사가 종료되었습니다</p>';
-      noteEl.textContent = '';
-      return;
-    }
-
-    const diff = target.date - now;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    daysEl.textContent = String(days).padStart(2, '0');
-    hoursEl.textContent = String(hours).padStart(2, '0');
-    minutesEl.textContent = String(minutes).padStart(2, '0');
-    secondsEl.textContent = String(seconds).padStart(2, '0');
-    noteEl.textContent = target.label;
+      timer.els.days.textContent = String(days).padStart(2, '0');
+      timer.els.hours.textContent = String(hours).padStart(2, '0');
+      timer.els.minutes.textContent = String(minutes).padStart(2, '0');
+      timer.els.seconds.textContent = String(seconds).padStart(2, '0');
+    });
   }
 
   update();
@@ -100,6 +109,10 @@ function initVenueTabs() {
 /* --- Location Tabs (Section 7) --- */
 function initLocationTabs() {
   const tabs = document.querySelectorAll('.location-tabs .venue-tab');
+  const maps = {
+    lakeside: document.getElementById('map-lakeside'),
+    gapyeong: document.getElementById('map-gapyeong')
+  };
   const infos = {
     lakeside: document.getElementById('info-lakeside'),
     gapyeong: document.getElementById('info-gapyeong')
@@ -111,6 +124,21 @@ function initLocationTabs() {
 
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
+
+      Object.entries(maps).forEach(([k, el]) => {
+        if (k === key) {
+          el.classList.remove('hidden');
+          if (el._kakaoMap) {
+            el._kakaoMap.relayout();
+          }
+          if (el._pendingVenue) {
+            createKakaoMap(el, el._pendingVenue);
+            delete el._pendingVenue;
+          }
+        } else {
+          el.classList.add('hidden');
+        }
+      });
 
       Object.entries(infos).forEach(([k, el]) => {
         if (k === key) {
@@ -153,14 +181,12 @@ function initFormSubmission() {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Validate date selection
     const dateInput = form.querySelector('input[name="date"]:checked');
     if (!dateInput) {
       showAlert('참석 날짜를 선택해주세요.');
       return;
     }
 
-    // Validate name
     const name = form.name.value.trim();
     if (!name) {
       showAlert('성함을 입력하세요.');
@@ -168,14 +194,12 @@ function initFormSubmission() {
       return;
     }
 
-    // Validate drive selection
     const driveInput = form.querySelector('input[name="drive"]:checked');
     if (!driveInput) {
       showAlert('대리운전 이용 여부를 선택해주세요.');
       return;
     }
 
-    // Validate conditional fields
     if (driveInput.value === '예') {
       if (!form.carnum.value.trim()) {
         showAlert('차량번호를 입력하세요.');
@@ -189,13 +213,11 @@ function initFormSubmission() {
       }
     }
 
-    // Validate consent
     if (!form.agree.checked) {
       showAlert('개인정보 수집 및 이용에 동의해주세요.');
       return;
     }
 
-    // Prepare data
     const formData = {
       date: dateInput.value,
       name: name,
@@ -204,7 +226,6 @@ function initFormSubmission() {
       address: form.address.value.trim()
     };
 
-    // Submit
     submitBtn.disabled = true;
     submitBtn.textContent = '전송 중...';
 
@@ -216,7 +237,6 @@ function initFormSubmission() {
         body: JSON.stringify(formData)
       });
 
-      // Show success
       const rsvpSection = document.getElementById('rsvp');
       rsvpSection.innerHTML =
         '<div class="container success-message">' +
