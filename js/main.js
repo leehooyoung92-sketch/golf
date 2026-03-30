@@ -8,7 +8,6 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbys3Yv0lzFfnvcS
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initCountdown();
-  initVenueTabs();
   initLocationTabs();
   initFormConditionals();
   initFormSubmission();
@@ -80,33 +79,7 @@ function initCountdown() {
   setInterval(update, 1000);
 }
 
-/* --- Venue Tabs (Section 3) --- */
-function initVenueTabs() {
-  const tabs = document.querySelectorAll('#venues .venue-tab');
-  const panels = {
-    lakeside: document.getElementById('venue-lakeside'),
-    gapyeong: document.getElementById('venue-gapyeong')
-  };
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const key = tab.dataset.venue;
-
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      Object.entries(panels).forEach(([k, panel]) => {
-        if (k === key) {
-          panel.classList.remove('hidden');
-        } else {
-          panel.classList.add('hidden');
-        }
-      });
-    });
-  });
-}
-
-/* --- Location Tabs (Section 7) --- */
+/* --- Location Tabs --- */
 function initLocationTabs() {
   const tabs = document.querySelectorAll('.location-tabs .venue-tab');
   const maps = {
