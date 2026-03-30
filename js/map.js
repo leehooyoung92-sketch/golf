@@ -1,27 +1,6 @@
 /* ============================================
-   Kakao Map 초기화 (+ Google Maps 폴백)
+   Kakao Map 초기화 (autoload 모드)
    ============================================ */
-
-var mapInitialized = false;
-
-window.addEventListener('load', () => {
-  try {
-    if (typeof kakao !== 'undefined' && kakao.maps) {
-      kakao.maps.load(() => {
-        initKakaoMaps();
-        mapInitialized = true;
-      });
-      // 3초 내 초기화 안 되면 폴백
-      setTimeout(() => {
-        if (!mapInitialized) showGoogleMapsFallback();
-      }, 3000);
-    } else {
-      showGoogleMapsFallback();
-    }
-  } catch (e) {
-    showGoogleMapsFallback();
-  }
-});
 
 var venues = [
   {
@@ -30,7 +9,7 @@ var venues = [
     address: '경기도 용인시 처인구 모현읍 능원로 181',
     lat: 37.2911,
     lng: 127.1556,
-    googleEmbed: 'https://www.google.com/maps?q=37.2911,127.1556&z=14&output=embed'
+    kakaoLink: 'https://map.kakao.com/link/map/레이크사이드CC,37.2911,127.1556'
   },
   {
     id: 'map-gapyeong',
@@ -38,29 +17,29 @@ var venues = [
     address: '경기도 가평군 상면 둔덕말길 232',
     lat: 37.7936,
     lng: 127.3569,
-    googleEmbed: 'https://www.google.com/maps?q=37.7936,127.3569&z=14&output=embed'
+    kakaoLink: 'https://map.kakao.com/link/map/가평베네스트,37.7936,127.3569'
   }
 ];
 
-function initKakaoMaps() {
-  var geocoder = new kakao.maps.services.Geocoder();
+window.addEventListener('load', function() {
+  // autoload 모드: SDK 로드 완료 시 kakao.maps.LatLng 사용 가능
+  if (typeof kakao !== 'undefined' && kakao.maps && kakao.maps.LatLng) {
+    initKakaoMaps();
+  } else {
+    showMapPlaceholder();
+  }
+});
 
+function initKakaoMaps() {
   venues.forEach(function(venue) {
     var container = document.getElementById(venue.id);
     if (!container) return;
 
-    geocoder.addressSearch(venue.address, function(result, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        venue.lat = parseFloat(result[0].y);
-        venue.lng = parseFloat(result[0].x);
-      }
-
-      if (!container.classList.contains('hidden')) {
-        createKakaoMap(container, venue);
-      } else {
-        container._pendingVenue = venue;
-      }
-    });
+    if (!container.classList.contains('hidden')) {
+      createKakaoMap(container, venue);
+    } else {
+      container._pendingVenue = venue;
+    }
   });
 }
 
@@ -89,25 +68,30 @@ function createKakaoMap(container, venue) {
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
     container._kakaoMap = map;
-    mapInitialized = true;
   } catch (e) {
-    showGoogleMapFallbackSingle(container, venue);
+    showSinglePlaceholder(container, venue);
   }
 }
 
-function showGoogleMapsFallback() {
+function showMapPlaceholder() {
   venues.forEach(function(venue) {
     var container = document.getElementById(venue.id);
     if (container && !container._kakaoMap) {
-      showGoogleMapFallbackSingle(container, venue);
+      showSinglePlaceholder(container, venue);
     }
   });
 }
 
-function showGoogleMapFallbackSingle(container, venue) {
+function showSinglePlaceholder(container, venue) {
   container.innerHTML =
-    '<iframe src="' + venue.googleEmbed + '" ' +
-    'width="100%" height="100%" style="border:0;" ' +
-    'allowfullscreen="" loading="lazy" ' +
-    'referrerpolicy="no-referrer-when-downgrade"></iframe>';
+    '<a href="' + venue.kakaoLink + '" target="_blank" ' +
+    'style="display:flex;flex-direction:column;align-items:center;justify-content:center;' +
+    'height:100%;background:#f0f0f0;color:#555;font-size:14px;text-align:center;' +
+    'text-decoration:none;gap:8px;padding:20px;">' +
+    '<span style="font-size:24px;">&#128205;</span>' +
+    '<strong style="color:#333;">' + venue.name + '</strong>' +
+    '<span style="font-size:12px;color:#888;">' + venue.address + '</span>' +
+    '<span style="margin-top:4px;padding:8px 16px;background:#8B1A2B;color:#fff;' +
+    'border-radius:6px;font-size:13px;font-weight:700;">카카오맵에서 보기</span>' +
+    '</a>';
 }
