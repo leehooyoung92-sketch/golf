@@ -33,7 +33,7 @@ function initScrollReveal() {
 function initCountdown() {
   const timers = [
     {
-      date: new Date('2026-06-10T10:30:00+09:00'),
+      date: new Date('2026-06-10T11:00:00+09:00'),
       els: {
         days: document.getElementById('cd1-days'),
         hours: document.getElementById('cd1-hours'),
@@ -43,7 +43,7 @@ function initCountdown() {
       group: document.getElementById('countdown-lakeside')
     },
     {
-      date: new Date('2026-06-12T10:30:00+09:00'),
+      date: new Date('2026-06-12T10:40:00+09:00'),
       els: {
         days: document.getElementById('cd2-days'),
         hours: document.getElementById('cd2-hours'),

@@ -26,7 +26,7 @@ function initScrollReveal() {
 }
 
 function initCountdown() {
-  const target = new Date('2026-06-10T10:30:00+09:00');
+  const target = new Date('2026-06-10T11:00:00+09:00');
   const els = {
     days: document.getElementById('cd-days'),
     hours: document.getElementById('cd-hours'),
